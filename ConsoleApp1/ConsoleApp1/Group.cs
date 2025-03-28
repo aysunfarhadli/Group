@@ -6,58 +6,93 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    class Group
+    using System;
+
+    namespace ConsoleApp1
     {
-        public string GroupNo { get; set; }
-        public int StudentLimit { get; set; }
-        private Student[] Students;
-        private int studentCount;
-        public Group(string groupNo, int studentLimit)
+        class Group
         {
-            if (CheckGroupNo(groupNo))
+           
+        public string GroupNo { get; set; }
+            public int StudentLimit { get; set; }
+            private Student[] Students;
+            private int studentCount;
+
+            public Group(string groupNo, int studentLimit)
             {
-                GroupNo = groupNo;
-                if (studentLimit >= 5 && studentLimit <= 18)
+                if (CheckGroupNo(groupNo))
                 {
-                    StudentLimit = studentLimit;
+                    GroupNo = groupNo;
+                    if (studentLimit >= 5 && studentLimit <= 18)
+                    {
+                        StudentLimit = studentLimit;
+                        Students = new Student[StudentLimit];
+                        studentCount = 0;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Tələbə sayı minimum 5 maksimum 18 ola bilər.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(" tələbə sayını minumum 5 maximum 18 ola bilər");
-                    return;
+                    Console.WriteLine("Qrup nömrəsi düzgün deyil! (məsələn: AB109)");
                 }
             }
-        }
-        public bool CheckGroupNo(string groupNo)
-        {
-            return groupNo.Length == 5 &&
-                char.IsUpper(groupNo[0]) && char.IsUpper(groupNo[1]) &&
-                char.IsDigit(groupNo[2]) && char.IsDigit(groupNo[3]) && char.IsDigit(groupNo[4]);
-        }
-        public void AddStudent(Student student)
-        {
-            if (studentCount < StudentLimit)
-            {
-                Students[studentCount++] = student;
-            }
-            else
-            {
-                Console.WriteLine("Qrup doludur");
-            }
-        }
-        public Student GetStudent(int id)
-        {
 
-            for (int i = 0; i < Students.Length; i++)
+            public bool CheckGroupNo(string groupNo)
             {
-                if (Students[i].Id == id)
-                    return Students[i];
+                if (groupNo.Length != 5)
+                    return false;
+
+                return char.IsUpper(groupNo[0]) &&
+                       char.IsUpper(groupNo[1]) &&
+                       char.IsDigit(groupNo[2]) &&
+                       char.IsDigit(groupNo[3]) &&
+                       char.IsDigit(groupNo[4]);
             }
-            return null;
-        }
-        public Student[] GetAllStudents()
-        {
-            return Students;
+
+            public void AddStudent(Student student)
+            {
+                if (studentCount < StudentLimit)
+                {
+                    Students[studentCount] = student;
+                    studentCount++;
+                }
+                else
+                {
+                    Console.WriteLine("Qrup doludur, əlavə edilə bilməz!");
+                }
+            }
+
+            public Student GetStudent(int id)
+            {
+                for (int i = 0; i < studentCount; i++)
+                {
+                    if (Students[i].Id == id)
+                        return Students[i];
+                }
+
+                return null;
+            }
+
+            public Student[] GetAllStudents()
+            {
+                Student[] allStudents = new Student[studentCount];
+
+                for (int i = 0; i < studentCount; i++)
+                {
+                    allStudents[i] = Students[i];
+                }
+
+                return allStudents;
+            }
         }
     }
+
+
+
 }
+    
+
+

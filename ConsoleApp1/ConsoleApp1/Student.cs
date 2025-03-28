@@ -8,6 +8,9 @@ namespace ConsoleApp1
 {
     class Student
     {
+
+
+
         public int Id { get; set; }
         public string Fullname { get; set; }
         public double Point { get; set; }
@@ -23,5 +26,8 @@ namespace ConsoleApp1
         {
             Console.WriteLine($"ID: {Id}, Name: {Fullname}, Point: {Point}");
         }
+
+
+
     }
 }
